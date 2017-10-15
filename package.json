@@ -1,0 +1,26 @@
+{
+  "name": "stegomark",
+  "version": "1.0.0",
+  "description": "A program that hides images in images - basic, yet robust",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ojas-Gulati/stegomark.git"
+  },
+  "keywords": [
+    "steganography",
+    "image"
+  ],
+  "author": "Ojas Gulati",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Ojas-Gulati/stegomark/issues"
+  },
+  "homepage": "https://github.com/Ojas-Gulati/stegomark#readme",
+  "dependencies": {
+    "jimp": "^0.2.28"
+  }
+}
