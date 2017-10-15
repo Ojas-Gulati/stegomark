@@ -1,7 +1,10 @@
 // OPTIONS:
 // squeezeprotection - basically makes input image larger
-exports.write = function (image_path_in, image_path_write, image_path_out, callback, squeeze_protection) {
-    if (typeof squeeze_protection === 'undefined') { squeeze_protection = 1 }
+exports.write = function (image_path_in, image_path_write, image_path_out, options) {
+    if (typeof options === 'undefined') { options = {} }
+    if (typeof options.callback === 'undefined') { options.callback = function () { } }
+    if (typeof options.squeeze_protection === 'undefined') { options.squeeze_protection = 1 }
+    var squeeze_protection = options.squeeze_protection
     var Jimp = require("jimp")
     Jimp.read(image_in, function (err, data) {
         if (err) {
@@ -38,34 +41,29 @@ exports.write = function (image_path_in, image_path_write, image_path_out, callb
                 this.bitmap.data[idx + 2] = b
             })
 
-            data.write(image_out, callback())
+            data.write(image_out, options.callback())
         })
     })
 }
 
-exports.read = function (image_in, image_out) {
-    setTimeout(function () {
-        console.log("reading")
-        var Jimp = require("jimp")
-        Jimp.read(image_in, function (err, data) {
-            console.log("55")
+exports.read = function (image_in, image_out, options) {
+    if (typeof options === 'undefined') { options = {} }
+    if (typeof options.callback === 'undefined') { options.callback = function () { } }
+    var Jimp = require("jimp")
+    Jimp.read(image_in, function (err, data) {
+        if (err) {
+            throw err
+        }
+        var iOut = new Jimp(data.bitmap.width, data.bitmap.height, function (err, image) {
             if (err) {
-                console.log("57")
-                throw err
+                throw err; // :D
             }
-            var iOut = new Jimp(data.bitmap.width, data.bitmap.height, function (err, image) {
-                if (err) {
-                    throw err; // :D
-                }
-                data.scan(0, 0, data.bitmap.width, data.bitmap.height, function (x, y, idx) {
-                    image.setPixelColor(((bit_read(this.bitmap.data[idx], 0) * 255) << 24) + ((bit_read(this.bitmap.data[idx + 1], 0) * 255) << 16) + ((bit_read(this.bitmap.data[idx + 2], 0) * 255) << 8) + 255, x, y)
-                })
-                image.write(image_out, function () {
-                    console.log("finished?")
-                })
+            data.scan(0, 0, data.bitmap.width, data.bitmap.height, function (x, y, idx) {
+                image.setPixelColor(((bit_read(this.bitmap.data[idx], 0) * 255) << 24) + ((bit_read(this.bitmap.data[idx + 1], 0) * 255) << 16) + ((bit_read(this.bitmap.data[idx + 2], 0) * 255) << 8) + 255, x, y)
             })
+            image.write(image_out, options.callback())
         })
-    }, 1000)
+    })
 }
 
 //write("in.png", "secret.png", "out.png", function () {
