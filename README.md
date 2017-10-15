@@ -12,8 +12,8 @@ stego.write("in.png", "write.png", "out.png", {
 ```
 ## Functions
 ```javascript
-stego.write(
-stego.read(
+stego.write(in_path, watermark_path, out_path[, options])
+stego.read(in_path, extracted_path[, options])
 ```
 
 ## Options
