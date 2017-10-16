@@ -1,6 +1,6 @@
 {
   "name": "stegomark",
-  "version": "1.0.0",
+  "version": "2.0.1",
   "description": "A program that hides images in images - basic, yet robust",
   "main": "index.js",
   "scripts": {

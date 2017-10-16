@@ -1,10 +1,14 @@
 // OPTIONS:
 // squeezeprotection - basically makes input image larger
 exports.write = function (image_path_in, image_path_write, image_path_out, options) {
+    var image_in = image_path_in
+    var image_out = image_path_out
+    var image_write = image_path_write
     if (typeof options === 'undefined') { options = {} }
     if (typeof options.callback === 'undefined') { options.callback = function () { } }
     if (typeof options.squeeze_protection === 'undefined') { options.squeeze_protection = 1 }
     var squeeze_protection = options.squeeze_protection
+    var callback = options.callback
     var Jimp = require("jimp")
     Jimp.read(image_in, function (err, data) {
         if (err) {
@@ -41,7 +45,7 @@ exports.write = function (image_path_in, image_path_write, image_path_out, optio
                 this.bitmap.data[idx + 2] = b
             })
 
-            data.write(image_out, options.callback())
+            data.write(image_out, callback)
         })
     })
 }

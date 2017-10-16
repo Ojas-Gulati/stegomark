@@ -30,3 +30,34 @@ For example, if we wanted to watermark the pixel with color FEB101 (orange) with
 3. Repeat for all the watermark pixels
 
 Reading does this in reverse.
+
+## Why is this better?
+1. In other LSB implementations, data stored in individual pixels is dependent on data from other pixels. However, by sacrificing color quality, we can store small, *independent* groups of data
+2. (my opinion) I like the visual system more - rather than extracting a cryptic message, one can show the message in a visual form.
+
+## Example!
+The input image below:
+
+![In](images/in.png)
+
+Was watermarked with this and a squeeze protection of 5:
+
+![Write](images/write.png)
+
+And created this output image:
+
+![Out](images/out.png)
+
+That had this data:
+
+![Extracted](images/extracted.png)
+
+### Testing against squeezing
+
+I squeezed the output image in paint.net to get this:
+
+![In-squeeze](images/in-squeeze.png)
+
+But I was still able to extract this image:
+
+![Extracted-squeeze](images/extracted-squeeze.png)
